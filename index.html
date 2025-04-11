@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Splitter</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-wallet"></i>
+                <span>ExpenseSplitter</span>
+            </div>
+            <div class="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="auth-buttons">
+                    <a href="login.html" class="btn btn-primary">Login</a>
+                    <a href="login.html?action=signup" class="btn btn-outline">Sign Up</a>
+                    <button class="mode-toggle" id="darkModeToggle" title="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Split Expenses Easily</h1>
+                <p>Manage group expenses, split bills, and settle debts with friends and family in a few clicks.</p>
+                <div class="hero-buttons">
+                    <a href="login.html" class="btn btn-primary">Get Started</a>
+                    <a href="#how-it-works" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="output.jpg" alt="Expense Splitter App">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="section-container">
+            <h2 class="section-title">Why Choose ExpenseSplitter?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Group Management</h3>
+                    <p>Create and manage multiple expense groups with friends, family, or roommates.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Smart Splitting</h3>
+                    <p>Split expenses equally, by percentage, or custom amounts based on your needs.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bell"></i>
+                    <h3>Notifications</h3>
+                    <p>Get notified about new expenses, payment reminders, and group updates.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Expense Analytics</h3>
+                    <p>Track spending patterns and view detailed expense reports.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="section-container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Create a Group</h3>
+                    <p>Start by creating a new group and adding members.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Add Expenses</h3>
+                    <p>Add expenses and choose how to split them.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Track & Settle</h3>
+                    <p>Track who owes what and settle up easily.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="section-container">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>support@expensesplitter.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>123 Business Street, City, Country</p>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Us</h4>
+                    <p>ExpenseSplitter makes it easy to manage and split expenses with friends and family.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ExpenseSplitter. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/dark-mode.js"></script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ExpenseSplitter</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #F9FAFB 0%, #EEF2FF 100%);
+            padding: 2rem;
+        }
+
+        .auth-box {
+            background: var(--white);
+            border-radius: 1rem;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header .logo {
+            display: inline-flex;
+            margin-bottom: 1rem;
+            text-decoration: none;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #E5E7EB;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .auth-tab.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: -2px;
+        }
+
+        .auth-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.5rem;
+            font-family: inherit;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .auth-form .btn {
+            width: 100%;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .signup-fields {
+            display: none;
+        }
+
+        .signup-fields.active {
+            display: block;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--text-light);
+        }
+
+        .auth-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-wallet"></i>
+                    <span>ExpenseSplitter</span>
+                </a>
+                <h2>Welcome Back</h2>
+                <p>Enter your credentials to access your account</p>
+            </div>
+
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="login">Login</div>
+                <div class="auth-tab" data-tab="signup">Sign Up</div>
+            </div>
+
+            <form class="auth-form" id="authForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="signup-fields">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+
+            <div class="auth-footer">
+                <p id="authFooterText">Don't have an account? <a href="#" class="toggle-auth" data-mode="signup">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auth form handling
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const signupFields = document.querySelector('.signup-fields');
+        const authForm = document.getElementById('authForm');
+        const submitButton = authForm.querySelector('button[type="submit"]');
+        const authFooterText = document.getElementById('authFooterText');
+        let currentMode = 'login';
+
+        function toggleAuthMode(mode) {
+            currentMode = mode;
+            authTabs.forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tab === mode);
+            });
+            signupFields.classList.toggle('active', mode === 'signup');
+            submitButton.textContent = mode === 'login' ? 'Login' : 'Sign Up';
+            
+            // Update footer text
+            if (mode === 'login') {
+                authFooterText.innerHTML = 'Don\'t have an account? <a href="#" class="toggle-auth" data-mode="signup">Sign up</a>';
+            } else {
+                authFooterText.innerHTML = 'Already have an account? <a href="#" class="toggle-auth" data-mode="login">Login</a>';
+            }
+
+            // Update toggle links
+            document.querySelectorAll('.toggle-auth').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    toggleAuthMode(e.target.dataset.mode);
+                });
+            });
+        }
+
+        // Tab click handlers
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => toggleAuthMode(tab.dataset.tab));
+        });
+
+        // Form submission
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(authForm);
+            const data = Object.fromEntries(formData);
+
+            if (currentMode === 'signup') {
+                // Validate signup fields
+                if (data.password !== data.confirmPassword) {
+                    alert('Passwords do not match!');
+                    return;
+                }
+                if (!data.name || !data.phone) {
+                    alert('Please fill in all required fields!');
+                    return;
+                }
+                // Store user data in localStorage for demo purposes
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                users.push({
+                    email: data.email,
+                    password: data.password,
+                    name: data.name,
+                    phone: data.phone
+                });
+                localStorage.setItem('users', JSON.stringify(users));
+                alert('Account created successfully! Please login with your credentials.');
+                toggleAuthMode('login');
+                authForm.reset();
+            } else {
+                // Login validation
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const user = users.find(u => u.email === data.email);
+                
+                if (!user) {
+                    alert('Username not found! Please sign up');
+                    return;
+                }
+                
+                if (user.password !== data.password) {
+                    alert('Incorrect password!');
+                    return;
+                }
+
+                // Store current user
+                localStorage.setItem('currentUser', user.email);
+                
+                // Successful login
+                window.location.href = 'create-group.html';
+            }
+        });
+
+        // Initialize toggle auth links
+        document.querySelectorAll('.toggle-auth').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleAuthMode(e.target.dataset.mode);
+            });
+        });
+
+        // Check URL parameters for automatic tab switching
+        window.addEventListener('load', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const action = urlParams.get('action');
+            if (action === 'signup') {
+                toggleAuthMode('signup');
+            }
+        });
+    </script>
+</body>
+</html>

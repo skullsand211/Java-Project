@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Group - ExpenseSplitter</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .dashboard-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #F9FAFB 0%, #EEF2FF 100%);
+            padding: 2rem;
+            transition: background 0.3s ease;
+        }
+
+        .dashboard-container.dark-mode {
+            background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-button:hover {
+            color: var(--primary-color);
+        }
+
+        .back-button i {
+            font-size: 1.2rem;
+        }
+
+        .welcome-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .create-group-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .group-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.5rem;
+            font-family: inherit;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .member-list {
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .member-item {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr) auto;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: #F9FAFB;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-item i {
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        .member-item i:hover {
+            color: #EF4444;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1rem 0;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-input-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr) auto;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .member-input {
+            padding: 0.75rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.5rem;
+            font-family: inherit;
+        }
+
+        #memberCount {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+
+        .budget-input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 0.75rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        #groupBudget {
+            padding-left: 2rem;
+        }
+
+        .btn-secondary {
+            background: #4F46E5;
+            color: white;
+            min-width: 200px;
+        }
+
+        .btn-secondary:hover {
+            background: #4338CA;
+        }
+
+        .split-type-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #F9FAFB;
+            border-radius: 0.5rem;
+        }
+
+        .split-type-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .split-options {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .split-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .split-option input[type="radio"] {
+            cursor: pointer;
+        }
+
+        .percentage-inputs {
+            display: none;
+            margin-top: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .percentage-inputs.active {
+            display: block;
+        }
+
+        .percentage-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+
+        .percentage-table th {
+            text-align: left;
+            padding: 0.75rem;
+            background: #F9FAFB;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #E5E7EB;
+        }
+
+        .percentage-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .percentage-input-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .percentage-input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.5rem;
+            text-align: right;
+            font-size: 0.95rem;
+        }
+
+        .percentage-symbol {
+            color: #6B7280;
+            font-weight: 500;
+        }
+
+        .total-percentage {
+            margin-top: 1rem;
+            text-align: right;
+            font-weight: 600;
+            color: #374151;
+            padding: 0.75rem;
+            background: #F9FAFB;
+            border-radius: 0.5rem;
+        }
+
+        .percentage-error {
+            color: #EF4444;
+            display: none;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: #FEF2F2;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Sidebar and Toggle Button Styles */
+        .sidebar {
+            position: fixed;
+            left: -250px;
+            top: 0;
+            bottom: 0;
+            width: 250px;
+            background: white;
+            padding: 2rem 1rem;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: left 0.3s ease, background 0.3s ease;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar.dark-mode {
+            background: #1F2937;
+        }
+
+        .sidebar.dark-mode .nav-item {
+            color: #F3F4F6;
+        }
+
+        .sidebar.dark-mode .nav-item:hover {
+            background: #374151;
+        }
+
+        .sidebar.dark-mode .sidebar-header {
+            border-bottom-color: #374151;
+        }
+
+        .sidebar.dark-mode h2 {
+            color: #F3F4F6;
+        }
+
+        .toggle-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+        }
+
+        .toggle-button:hover {
+            background: #F3F4F6;
+            border-color: #D1D5DB;
+        }
+
+        .toggle-button i {
+            font-size: 1.2rem;
+            color: var(--text-color);
+        }
+
+        /* Sidebar Content Styles */
+        .sidebar-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .nav-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: #F3F4F6;
+        }
+
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Adjust main content for sidebar */
+        .dashboard-container {
+            transition: margin-left 0.3s ease;
+        }
+
+        .dashboard-container.with-sidebar {
+            margin-left: 250px;
+        }
+
+        /* Keep the content sections light */
+        .dashboard-header,
+        .create-group-container,
+        .member-item,
+        .split-type-container,
+        .percentage-inputs,
+        .percentage-table th,
+        .percentage-table td {
+            background: white;
+        }
+
+        /* Style for active dark mode button */
+        .nav-item.dark-mode-active {
+            background: #374151;
+            color: #F3F4F6;
+        }
+
+        /* Remove all expense table styles */
+        .expense-table,
+        .expense-table th,
+        .expense-table td,
+        .btn-pay,
+        .btn-query {
+            display: none;
+        }
+
+        .expense-breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .expense-breakdown-table th,
+        .expense-breakdown-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .expense-breakdown-table th {
+            background: #F9FAFB;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .expense-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.5rem;
+            font-family: inherit;
+        }
+
+        .amount-input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .amount-input-container .currency-symbol {
+            position: absolute;
+            left: 0.75rem;
+        }
+
+        .amount-input-container input {
+            padding-left: 2rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .total-row {
+            background: #F9FAFB;
+            font-size: 1.1rem;
+        }
+
+        .expense-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-remove {
+            color: #EF4444;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+        }
+
+        .btn-remove:hover {
+            background: #FEE2E2;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-header">
+                <h2>Menu</h2>
+            </div>
+            <div class="nav-items">
+                <a href="#" class="nav-item" id="darkModeToggle">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark Mode</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-search"></i>
+                    <span>Search Groups</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Help</span>
+                </a>
+                <a href="#" class="nav-item" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <button class="toggle-button" id="sidebarToggle" title="Toggle Menu">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <a href="javascript:history.back()" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back</span>
+                </a>
+                <div class="logo">
+                    <i class="fas fa-wallet"></i>
+                    <span>ExpenseSplitter</span>
+                </div>
+            </div>
+            <div class="welcome-text">
+                Welcome, <span id="userName">User</span>!
+            </div>
+        </header>
+
+        <div class="create-group-container">
+            <h2 class="section-title">Create a New Group</h2>
+            <form class="group-form" id="createGroupForm">
+                <div class="form-group">
+                    <label for="groupName">Group Name</label>
+                    <input type="text" id="groupName" name="groupName" required placeholder="Enter group name">
+                </div>
+
+                <div class="form-group">
+                    <label for="groupDescription">Description (Optional)</label>
+                    <textarea id="groupDescription" name="groupDescription" rows="3" placeholder="Enter group description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Expense Breakdown</label>
+                    <table class="expense-breakdown-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount (₹)</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expenseBreakdownBody">
+                            <!-- Expense items will be added here -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>
+                                    <input type="text" id="expenseDescription" class="expense-input" placeholder="Enter expense description">
+                                </td>
+                                <td>
+                                    <div class="amount-input-container">
+                                        <span class="currency-symbol">₹</span>
+                                        <input type="number" id="expenseAmount" class="expense-input" placeholder="Enter amount" min="0">
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" id="addExpenseBtn" class="btn btn-outline btn-small">
+                                        <i class="fas fa-plus"></i> Add
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="total-row">
+                                <td><strong>Total Budget</strong></td>
+                                <td colspan="2"><strong>₹<span id="totalExpense">0</span></strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="form-group">
+                    <label for="addMember">Add Members <span id="memberCount">(0 members)</span></label>
+                    <div class="member-input-container">
+                        <input type="text" id="memberName" placeholder="Enter member's name" class="member-input">
+                        <input type="email" id="memberEmail" placeholder="Enter member's email" class="member-input">
+                        <input type="tel" id="memberPhone" placeholder="Enter member's phone" class="member-input">
+                        <button type="button" id="addMemberBtn" class="btn btn-outline">Add Member</button>
+                    </div>
+                    <div class="member-list" id="memberList">
+                        <!-- Members will be added here dynamically -->
+                    </div>
+                </div>
+
+                <div class="split-type-container">
+                    <h3 class="split-type-title">How would you like to split the expenses?</h3>
+                    <div class="split-options">
+                        <label class="split-option">
+                            <input type="radio" name="splitType" value="equal" checked>
+                            <span>Fair Share (Equal Split)</span>
+                        </label>
+                        <label class="split-option">
+                            <input type="radio" name="splitType" value="percentage">
+                            <span>Percentage Split</span>
+                        </label>
+                    </div>
+                    <div class="percentage-inputs" id="percentageInputs">
+                        <table class="percentage-table">
+                            <thead>
+                                <tr>
+                                    <th>Member Name</th>
+                                    <th>Email</th>
+                                    <th>Percentage Share</th>
+                                </tr>
+                            </thead>
+                            <tbody id="percentageList">
+                            </tbody>
+                        </table>
+                        <div class="total-percentage" id="totalPercentage">Total: 0%</div>
+                        <div class="percentage-error" id="percentageError">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Total percentage must equal 100%
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-container">
+                    <button type="button" id="okButton" class="btn btn-secondary">Proceed</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Keep only the necessary JavaScript, remove sidebar-related code
+        window.onload = function() {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const currentUserEmail = localStorage.getItem('currentUser');
+            
+            if (!currentUserEmail) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const currentUser = users.find(u => u.email === currentUserEmail);
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.name;
+            }
+        };
+
+        // Group creation handling
+        const createGroupForm = document.getElementById('createGroupForm');
+        const addMemberBtn = document.getElementById('addMemberBtn');
+        const memberList = document.getElementById('memberList');
+        const percentageInputs = document.getElementById('percentageInputs');
+        const percentageList = document.getElementById('percentageList');
+        const totalPercentageDisplay = document.getElementById('totalPercentage');
+        const percentageError = document.getElementById('percentageError');
+        
+        let members = [];
+        let splitPercentages = {};
+        let expenses = [];
+
+        // Split type handling
+        document.querySelectorAll('input[name="splitType"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.value === 'percentage') {
+                    percentageInputs.classList.add('active');
+                    renderPercentageInputs();
+                } else {
+                    percentageInputs.classList.remove('active');
+                }
+            });
+        });
+
+        function renderPercentageInputs() {
+            percentageList.innerHTML = '';
+            members.forEach(member => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${member.name}</td>
+                    <td>${member.email}</td>
+                    <td>
+                        <div class="percentage-input-container">
+                            <input type="number" 
+                                   class="percentage-input" 
+                                   value="${splitPercentages[member.email] || ''}"
+                                   min="0" 
+                                   max="100" 
+                                   step="1" 
+                                   placeholder="0"
+                                   data-email="${member.email}">
+                            <span class="percentage-symbol">%</span>
+                        </div>
+                    </td>
+                `;
+                percentageList.appendChild(row);
+            });
+
+            // Add event listeners to percentage inputs
+            document.querySelectorAll('.percentage-input').forEach(input => {
+                input.addEventListener('input', updateTotalPercentage);
+            });
+
+            updateTotalPercentage();
+        }
+
+        function updateTotalPercentage() {
+            const inputs = document.querySelectorAll('.percentage-input');
+            let total = 0;
+
+            inputs.forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                total += value;
+                splitPercentages[input.dataset.email] = value;
+            });
+
+            totalPercentageDisplay.textContent = `Total: ${total}%`;
+            
+            if (total !== 100) {
+                percentageError.style.display = 'block';
+                return false;
+            } else {
+                percentageError.style.display = 'none';
+                return true;
+            }
+        }
+
+        addMemberBtn.addEventListener('click', () => {
+            const name = document.getElementById('memberName').value.trim();
+            const email = document.getElementById('memberEmail').value.trim();
+            const phone = document.getElementById('memberPhone').value.trim();
+
+            if (email && name && phone && !members.find(m => m.email === email)) {
+                const member = { name, email, phone };
+                members.push(member);
+                renderMembers();
+                
+                // Clear inputs
+                document.getElementById('memberName').value = '';
+                document.getElementById('memberEmail').value = '';
+                document.getElementById('memberPhone').value = '';
+            } else if (!name || !email || !phone) {
+                alert('Please fill in all member details');
+            } else {
+                alert('This email is already added to the group');
+            }
+        });
+
+        function removeMember(email) {
+            members = members.filter(m => m.email !== email);
+            renderMembers();
+        }
+
+        function renderMembers() {
+            memberList.innerHTML = '';
+            document.getElementById('memberCount').textContent = `(${members.length} members)`;
+            
+            members.forEach(member => {
+                const memberItem = document.createElement('div');
+                memberItem.className = 'member-item';
+                memberItem.innerHTML = `
+                    <span>${member.name}</span>
+                    <span>${member.email}</span>
+                    <span>${member.phone}</span>
+                    <i class="fas fa-times" onclick="removeMember('${member.email}')"></i>
+                `;
+                memberList.appendChild(memberItem);
+            });
+
+            // Update percentage inputs if they're active
+            if (percentageInputs.classList.contains('active')) {
+                renderPercentageInputs();
+            }
+        }
+
+        // Update form submission to include split type
+        document.getElementById('okButton').addEventListener('click', () => {
+            const formData = {
+                name: document.getElementById('groupName').value,
+                description: document.getElementById('groupDescription').value,
+                budget: parseFloat(document.getElementById('totalExpense').textContent.replace(/,/g, '')),
+                memberCount: members.length,
+                splitType: document.querySelector('input[name="splitType"]:checked').value
+            };
+
+            // Validate form data
+            if (!formData.name) {
+                alert('Please enter a group name');
+                return;
+            }
+            if (expenses.length === 0) {
+                alert('Please add at least one expense');
+                return;
+            }
+            if (members.length === 0) {
+                alert('Please add at least one member to the group');
+                return;
+            }
+            if (formData.splitType === 'percentage' && !updateTotalPercentage()) {
+                alert('Please ensure percentage split equals 100%');
+                return;
+            }
+
+            // Calculate individual shares
+            const budget = formData.budget;
+            const shares = members.map(member => {
+                const share = formData.splitType === 'equal' 
+                    ? budget / members.length 
+                    : (budget * splitPercentages[member.email]) / 100;
+                return `${member.name}: ₹${share.toLocaleString('en-IN')}`;
+            }).join('\n');
+
+            // Show summary with expense breakdown
+            const expenseBreakdown = expenses.map(expense => 
+                `${expense.description}: ₹${expense.amount.toLocaleString('en-IN')}`
+            ).join('\n');
+
+            if (confirm(`Group Summary:
+- Name: ${formData.name}
+- Description: ${formData.description || 'None'}
+- Members: ${formData.memberCount}
+- Split Type: ${formData.splitType === 'equal' ? 'Equal Split' : 'Percentage Split'}
+
+Expense Breakdown:
+${expenseBreakdown}
+Total Budget: ₹${budget.toLocaleString('en-IN')}
+
+Individual Shares:
+${shares}
+
+Are you ready to create this group?`)) {
+                const groupData = {
+                    name: formData.name,
+                    description: formData.description,
+                    budget: budget,
+                    expenses: expenses,
+                    members: members,
+                    splitType: formData.splitType,
+                    splitPercentages: formData.splitType === 'percentage' ? splitPercentages : null,
+                    shares: members.map(member => ({
+                        email: member.email,
+                        share: formData.splitType === 'equal' 
+                            ? budget / members.length 
+                            : (budget * splitPercentages[member.email]) / 100
+                    })),
+                    createdBy: localStorage.getItem('currentUser'),
+                    createdAt: new Date().toISOString()
+                };
+
+                // Store group data
+                const groups = JSON.parse(localStorage.getItem('groups') || '[]');
+                groups.push(groupData);
+                localStorage.setItem('groups', JSON.stringify(groups));
+
+                alert('Group created successfully!');
+                // Redirect to expense split page with group ID
+                window.location.href = `expense-split.html?groupId=${groups.length - 1}`;
+            }
+        });
+
+        // Add sidebar toggle functionality
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const dashboardContainer = document.querySelector('.dashboard-container');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            dashboardContainer.classList.toggle('with-sidebar');
+        });
+
+        // Add logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('currentUserEmail');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Update dark mode toggle functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        let isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+        function updateDarkMode() {
+            const dashboardContainer = document.querySelector('.dashboard-container');
+            const sidebar = document.getElementById('sidebar');
+            
+            if (isDarkMode) {
+                dashboardContainer.classList.add('dark-mode');
+                sidebar.classList.add('dark-mode');
+                darkModeToggle.classList.add('dark-mode-active');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            } else {
+                dashboardContainer.classList.remove('dark-mode');
+                sidebar.classList.remove('dark-mode');
+                darkModeToggle.classList.remove('dark-mode-active');
+                darkModeToggle.querySelector('i').classList.remove('fa-sun');
+                darkModeToggle.querySelector('i').classList.add('fa-moon');
+            }
+        }
+
+        // Initialize dark mode state
+        updateDarkMode();
+
+        darkModeToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            isDarkMode = !isDarkMode;
+            updateDarkMode();
+            localStorage.setItem('darkMode', isDarkMode);
+        });
+
+        document.getElementById('addExpenseBtn').addEventListener('click', () => {
+            const description = document.getElementById('expenseDescription').value.trim();
+            const amount = parseFloat(document.getElementById('expenseAmount').value);
+
+            if (description && amount > 0) {
+                expenses.push({ description, amount });
+                renderExpenses();
+                
+                // Clear inputs
+                document.getElementById('expenseDescription').value = '';
+                document.getElementById('expenseAmount').value = '';
+            } else {
+                alert('Please enter both description and amount');
+            }
+        });
+
+        function removeExpense(index) {
+            expenses.splice(index, 1);
+            renderExpenses();
+        }
+
+        function renderExpenses() {
+            const tbody = document.getElementById('expenseBreakdownBody');
+            tbody.innerHTML = '';
+            
+            let total = 0;
+            expenses.forEach((expense, index) => {
+                total += expense.amount;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${expense.description}</td>
+                    <td>₹${expense.amount.toLocaleString('en-IN')}</td>
+                    <td>
+                        <button type="button" class="btn-remove" onclick="removeExpense(${index})">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Update total and budget
+            document.getElementById('totalExpense').textContent = total.toLocaleString('en-IN');
+        }
+    </script>
+</body>
+</html> 

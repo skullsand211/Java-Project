@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - ExpenseSplitter</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .dashboard-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #F9FAFB 0%, #EEF2FF 100%);
+            padding: 2rem;
+            transition: background 0.3s ease;
+        }
+
+        .dashboard-container.dark-mode {
+            background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
+        }
+
+        .dashboard-container.dark-mode .dashboard-header,
+        .dashboard-container.dark-mode .profile-container {
+            background: #1F2937;
+            color: #F3F4F6;
+        }
+
+        .dashboard-container.dark-mode .back-button {
+            color: #F3F4F6;
+        }
+
+        .dashboard-container.dark-mode .back-button:hover {
+            background: #374151;
+        }
+
+        .dashboard-container.dark-mode .welcome-text,
+        .dashboard-container.dark-mode .profile-title {
+            color: #F3F4F6;
+        }
+
+        .dashboard-container.dark-mode .info-label {
+            color: #9CA3AF;
+        }
+
+        .dashboard-container.dark-mode .info-value {
+            color: #F3F4F6;
+        }
+
+        .dashboard-container.dark-mode .info-group {
+            border-bottom-color: #374151;
+        }
+
+        .dashboard-container.dark-mode .btn-outline {
+            border-color: #4F46E5;
+            color: #4F46E5;
+        }
+
+        .dashboard-container.dark-mode .btn-outline:hover {
+            background: #4F46E5;
+            color: white;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #F3F4F6;
+            color: var(--primary-color);
+        }
+
+        .back-button i {
+            font-size: 1.2rem;
+        }
+
+        .logo {
+            margin-left: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .welcome-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            background: #E5E7EB;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-avatar i {
+            font-size: 3rem;
+            color: #9CA3AF;
+        }
+
+        .profile-title {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-subtitle {
+            color: #6B7280;
+            font-size: 1rem;
+        }
+
+        .profile-info {
+            margin-top: 2rem;
+        }
+
+        .info-group {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .info-group:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: #6B7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <a href="javascript:history.back()" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back</span>
+                </a>
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <div class="logo">
+                    <i class="fas fa-wallet"></i>
+                    <span>ExpenseSplitter</span>
+                </div>
+            </div>
+            <div class="welcome-text">
+                Welcome, <span id="userName">User</span>!
+            </div>
+        </header>
+
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h1 class="profile-title" id="profileName">Loading...</h1>
+                <p class="profile-subtitle" id="profileEmail">Loading...</p>
+            </div>
+
+            <div class="profile-info">
+                <div class="info-group">
+                    <div class="info-label">Full Name</div>
+                    <div class="info-value" id="fullName">Loading...</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Email Address</div>
+                    <div class="info-value" id="email">Loading...</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Phone Number</div>
+                    <div class="info-value" id="phone">Loading...</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Account Created</div>
+                    <div class="info-value" id="createdAt">Loading...</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Groups Created</div>
+                    <div class="info-value" id="groupsCount">Loading...</div>
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button class="btn btn-outline" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Check dark mode state from localStorage
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            const dashboardContainer = document.querySelector('.dashboard-container');
+            
+            // Apply dark mode if enabled
+            if (isDarkMode) {
+                dashboardContainer.classList.add('dark-mode');
+                document.body.style.backgroundColor = '#111827';
+            }
+
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const currentUserEmail = localStorage.getItem('currentUser');
+            
+            if (!currentUserEmail) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const currentUser = users.find(u => u.email === currentUserEmail);
+            if (currentUser) {
+                // Update header
+                document.getElementById('userName').textContent = currentUser.name;
+
+                // Update profile information
+                document.getElementById('profileName').textContent = currentUser.name;
+                document.getElementById('profileEmail').textContent = currentUser.email;
+                document.getElementById('fullName').textContent = currentUser.name;
+                document.getElementById('email').textContent = currentUser.email;
+                document.getElementById('phone').textContent = currentUser.phone || 'Not provided';
+                document.getElementById('createdAt').textContent = new Date(currentUser.createdAt).toLocaleDateString();
+
+                // Count groups created by user
+                const groups = JSON.parse(localStorage.getItem('groups') || '[]');
+                const userGroups = groups.filter(group => group.createdBy === currentUserEmail);
+                document.getElementById('groupsCount').textContent = userGroups.length;
+            }
+        };
+
+        // Add logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('currentUserEmail');
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html> 
